@@ -91,26 +91,52 @@ exports.editUser = function (req, res) {
   });
 };
 
-
-
 //Checking for username Existance
 exports.authUser = function (req, res) {
   var passwordHash = require('password-hash');
   var email = req.body.email,
-      uPass = passwordHash.generate(req.body.password),
       result = {};
   getConnection(function (err, db) {
     db.collection('users', function (err, collection) {
-      collection.findOne({'email': email, "password":uPass}, function (err, items) {
+      collection.findOne({'email': email}, function (err, items) {
+        if (err) { throw err; }
+        if(items) {
+
+          if(passwordHash.verify(req.body.password, items.password )) {
+            result.stat = 200;
+            result.msg = 'Logged In';
+            result.user = items;
+            res.send(result);
+          } else {
+            result.stat = 400;
+            result.msg = 'Wrong Password';
+            res.send(result);
+          }
+        } else {
+          result.stat = 400;
+          result.msg = 'No Such user found';
+          res.send(result);
+        }
+      });
+    });
+  });
+};
+
+//Checking for username Existance
+exports.resetPass = function (req, res) {
+  var emailorusername = req.body.emailorusername,
+      result = {};
+  getConnection(function (err, db) {
+    db.collection('users', function (err, collection) {
+      collection.find({ $or: [ { email: emailorusername}, { nick: emailorusername } ] }, function (err, items) {
         if (err) { throw err; }
         if(items) {
           result.stat = 200;
-          result.msg = 'Nickname Taken !!';
-          result.user = items;
+          result.msg = 'Email sent to your address !!';
           res.send(result);
         } else {
           result.stat = 400;
-          result.msg = 'No Such combination found';
+          result.msg = 'No Such user found';
           res.send(result);
         }
       });
