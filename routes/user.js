@@ -4,7 +4,6 @@ var getConnection = require('../connection.js');
 exports.addUser = function (req, res) {
   var wine = req.body;
   var passwordHash = require('password-hash');
-
   getConnection(function (err, db) {
     var uEmail = req.body.email,
         result = {},
@@ -12,6 +11,10 @@ exports.addUser = function (req, res) {
         hashKey = passwordHash.generate(req.body.email);
     wine.password = uPass;
     wine.accTok = hashKey;
+    wine.fullName = "";
+    wine.bio = "";
+    wine.picPath = "";
+
     db.collection('users', function (err, collection) {
       collection.findOne({'email': uEmail}, function (err, item) {
         if (item) {
@@ -19,12 +22,13 @@ exports.addUser = function (req, res) {
           result.msg = 'User Exists !!';
           res.send(result);
         } else {
-          collection.insert(wine, {safe: true}, function (err, result) {
+          collection.insert(wine, {safe: true}, function (err, item) {
             if (err) {
               res.send({'stat': 300, 'msg' : "Server Err"});
             } else {
               result.stat = 200;
               result.msg = 'New Registration';
+              result.user = item.ops;
               res.send(result);
             }
           });
@@ -62,14 +66,13 @@ exports.editUser = function (req, res) {
   getConnection(function (err, db) {
     var uEmail = req.body.email,
         result = {};
-
     db.collection('users', function (err, collection) {
       collection.update({'email': uEmail},
         {$set:{
           'fullName': req.body.fullName,
           "bio": req.body.bio,
           "mobile": req.body.mobile,
-          "picId": req.body.picId
+          "picPath": req.body.picPath
         }} , function (err, item) {
         if (item) {
           result.stat = 100;
@@ -101,7 +104,6 @@ exports.authUser = function (req, res) {
       collection.findOne({'email': email}, function (err, items) {
         if (err) { throw err; }
         if(items) {
-
           if(passwordHash.verify(req.body.password, items.password )) {
             result.stat = 200;
             result.msg = 'Logged In';
@@ -122,17 +124,43 @@ exports.authUser = function (req, res) {
   });
 };
 
-//Checking for username Existance
+//Reset the password for an email address
 exports.resetPass = function (req, res) {
   var emailorusername = req.body.emailorusername,
       result = {};
   getConnection(function (err, db) {
     db.collection('users', function (err, collection) {
-      collection.find({ $or: [ { email: emailorusername}, { nick: emailorusername } ] }, function (err, items) {
+      collection.findOne({ $or: [ { "email": emailorusername}, { "nick": emailorusername } ] }, function (err, items) {
         if (err) { throw err; }
+        console.log(items);
         if(items) {
           result.stat = 200;
           result.msg = 'Email sent to your address !!';
+          res.send(result);
+        } else {
+          result.stat = 400;
+          result.msg = 'No Such user found';
+          res.send(result);
+        }
+      });
+    });
+  });
+};
+
+
+//Search for a user
+exports.userSearch = function (req, res) {
+  var nickname = req.params.uname,
+      result = {};
+  getConnection(function (err, db) {
+    db.collection('users', function (err, collection) {
+      collection.find({ "nick": {$regex : nickname}}, { "fullName":1, "bio":1, "picPath":1, "_id":0, "nick":1  }).toArray(function (err, items) {
+        if (err) { throw err; }
+        console.log(items);
+        if(items) {
+          result.stat = 200;
+          result.msg = 'Found';
+          result.users = items;
           res.send(result);
         } else {
           result.stat = 400;

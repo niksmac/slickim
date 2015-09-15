@@ -25,6 +25,8 @@
     "jwt-simple": "~0.3.1",
     "nodemailer": "~1.4.0",
     "password-hash": "~1.2.2",
-    "connect-multiparty": "~2.0.0"
+    "connect-multiparty": "~2.0.0",
+    "mongodb": "~2.0.43",
+    "shortid": "~2.2.2"
   }
 }
