@@ -1,0 +1,26 @@
+html, body{
+  height:100%;
+}
+.em {
+  font-style: italic;
+  display: block;
+}
+.chat-left {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  padding: 20px 0 ;
+}
+#chatWrap {
+  display: none;
+}
+#message {
+  width: 100%;
+}
+.full-w {
+  width:90%;
+}
+#chats {
+  min-height: 400px;
+  height: 100%;
+}

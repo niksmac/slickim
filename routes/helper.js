@@ -1,4 +1,5 @@
 var getConnection = require('../connection.js');
+
 exports.uploadImages = function (req, res) {
   getConnection(function (err, db) {
     var wine = req.body;

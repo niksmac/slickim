@@ -6,14 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Chat Thxalot</title>
-    <style type="text/css">
-      .em {
-        font-style: italic;
-        display: block;
-      }
-    </style>
     <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/chats.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,15 +20,16 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="chat-left col-md-8">
           <div id="newuser">
             <h4>Enter chat</h4>
-            <form action="" id="nickform" class="form-inline">
+            <form action="" method="post" id="nickform" class="form-inline">
               <div class="form-group">
-              <input type="text" id="nikk" class="form-control" placeholder="Choose Nickname">
+              <input type="text" id="nikk" class="form-control" required placeholder="Choose Nickname">
               </div>
               <div class="form-group">
-              <select name="group" id="group" class="form-control">
+              <select name="group" id="group" class="form-control" required>
+                <option value="" selected="">---</option>
                 <option value="Art">Art</option>
                 <option value="Culture">Culture</option>
                 <option value="Books">Books</option>
@@ -44,109 +40,48 @@
           </div>
           <div id="chatWrap">
             <div id="chats">
-            <h4 id="me" data-nick="" data-group="" class="text-danger"></h4>
+            <h4 id="me" data-nick="" data-group="" class="text-danger">hey</h4>
             <br>
             </div>
-            <div id="msg">
-              <form action="" class="form-inline" id="msgForm">
+            <div id="msg" class="footer">
+              <form action="" method="post" class="form-inline" id="msgForm" enctype="multipart/form-data">
                 <small class="text-muted em" id="istyp"></small>
-                <div class="form-group">
-                  <input type="text" id="message" class="form-control" placeholder="Enter Chat">
+                <div class="form-group full-w">
+                  <textarea id="message" required class="form-control" placeholder="Enter Chat" rows="3"></textarea>
+                  <input id="fileupload" type="file" name="displayImage" data-url="upload">
                 </div>
-                <button id="send" class="btn btn-info">Send</button>
+                <button id="send" type="submit"  class="btn btn-info">Send</button>
+                <br>
+                <div id="output"></div>
+
+                <a href="javascript:void(0);" id="leave" class="btn btn-link">Leave Chat</a>
               </form>
             </div>
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4 chat-right">
           <h4>Other Chats</h4>
           <div id="chatlog"></div>
         </div>
       </div>
+      <audio id="newchat">
+        <source src="../assets/newchat.mp3" type="audio/mpeg">
+      </audio>
+
     </div>
 
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../assets/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
     <script src="/socket.io/socket.io.js"></script>
-
-    <script>
-      jQuery(function($){
-        $('#chatWrap').hide();
-        var socket = io.connect();
-
-
-        jQuery('#message').keyup(function(e){
-          var nick = jQuery('#me').attr('data-nick');
-          var group = jQuery('#me').attr('data-group');
-          var chatdata = {"nick":nick, "group": group};
-
-          socket.emit('istyping', chatdata, function(data){
-
-          });
-        });
-
-        jQuery('#msgForm').submit(function(e){
-          return false;
-        });
-
-        jQuery('#nickform').submit(function(e){
-          e.preventDefault();
-          var nick = jQuery('#nikk').val();
-          var group = jQuery('#group').val();
-          jQuery('#me').attr('data-nick', nick);
-          jQuery('#me').attr('data-group', group);
-
-          jQuery('#me').text(nick + " IN "+ group);
-
-          var userdata = {"nick":nick, "group": group};
-          socket.emit('newuser', userdata, function(data){
-            $('#newuser').hide();
-            $('#chatWrap').show();
-          });
-        });
-
-        jQuery('#send').click(function(e){
-          console.log(socket);
-          var msg = jQuery('#message').val();
-          var nick = jQuery('#me').attr('data-nick');
-          var group = jQuery('#me').attr('data-group');
-          var chatdata = {"nick":nick, "group": group, "msg": msg};
-          socket.emit('newchat', chatdata, function(data){
-
-          });
-
-          jQuery('#chats').append("<p class='text-primary'><b>Me:</b> " + msg + '<br></p>');
-          jQuery('#message').val('');
-        });
-
-        socket.on('chatbroardcast', function(data){
-          jQuery('#chats').append("<p class='text-muted'><b>"+data.nick+":</b> " + data.msg + '<br></p>');
-        });
-
-        socket.on('chatlog', function(data){
-          jQuery('#chatlog').append("<p class='text'><b>"+data.nick+":</b> Said " + data.msg + ' in ' + data.group + '<br></p>');
-        });
-
-        socket.on('someoneistyping', function(data){
-          jQuery('#istyp').fadeIn();
-          jQuery('#istyp').text(data.nick + ' is typing...');
-          setTimeout(function(){
-            jQuery('#istyp').fadeOut();
-          }, 2000);
-
-        });
-
-
-        socket.on('newusercame', function(data){
-          console.log(data);
-        });
-
-      });
-    </script>
+    <script src="../assets/bootstrap.min.js"></script>
+    <script src="../assets/store.min.js"></script>
+    <script src="../assets/jquery.ui.widget.js"></script>
+    <script src="../assets/jquery.fileupload.js"></script>
+    <script src="../assets/chats.js"></script>
 
   </body>
 </html>

@@ -16,13 +16,15 @@ var users = {};
 var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart();
 var bodyParser = require('body-parser')
-app.use( bodyParser.json() );
+app.use( bodyParser.json({limit: '50mb'}) );
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
+  limit: '50mb'
 }));
 
 //Serve Static Files
 app.use("/uploads", express.static(__dirname + '/uploads', { maxAge: oneYear }));
+app.use("/assets", express.static(__dirname + '/assets', { maxAge: oneYear }));
 
 // Show the home page
 app.get('/', function (req, res) {
@@ -54,7 +56,7 @@ app.post('/friends/match', thefriend.matchContacts);
 
 //Upload Image
 app.post('/upload', multipartMiddleware, theHelper.uploadImages);
-
+//app.post('/base64upload', multipartMiddleware, theHelper.base64upload);
 
 //The Chat
 io.sockets.on('connection', function (socket) {
@@ -85,6 +87,7 @@ io.sockets.on('connection', function (socket) {
         "nick": data.nick,
         "group": data.group,
         "msg": data.msg,
+        "photo": data.photo,
       });
 
       socket.room = data.group;
@@ -93,6 +96,7 @@ io.sockets.on('connection', function (socket) {
         "nick": data.nick,
         "group": data.group,
         "msg": data.msg,
+        "photo": data.photo,
       });
 
       socket.user_id = data.nick;
