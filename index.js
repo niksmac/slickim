@@ -9,6 +9,7 @@ server.listen(3000);
 
 var theUser = require('./routes/user');
 var thefriend = require('./routes/friends');
+var theGroup = require('./routes/groups');
 var theStatic = require('./routes/static');
 var theHelper = require('./routes/helper');
 var users = {};
@@ -53,6 +54,10 @@ app.post('/user/auth', theUser.authUser);
 app.post('/friends/invite', thefriend.inviteFriend);
 app.get('/friends/:nick', thefriend.getFriends);
 app.post('/friends/match', thefriend.matchContacts);
+
+//Chat Group
+app.post('/group', theGroup.createGroup);
+app.get('/mygroups/:nick', theGroup.getMygroups);
 
 //Upload Image
 app.post('/upload', multipartMiddleware, theHelper.uploadImages);

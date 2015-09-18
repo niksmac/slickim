@@ -38,13 +38,13 @@ exports.getFriends = function (req, res) {
       collection.find({'mynick': needle}, {"_id":0} ).toArray(function (err, items) {
         if (err) { throw err; }
         if(items) {
-          result.stat = 100;
+          result.stat = 200;
           result.msg = 'List of friends of ' + needle;
           result.friends = items;
           res.send(result);
         } else {
-          result.stat = 200;
-          result.msg = 'Nickname Available';
+          result.stat = 100;
+          result.msg = 'Zero friends';
           res.send(result);
         }
       });

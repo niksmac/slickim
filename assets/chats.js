@@ -74,9 +74,11 @@ jQuery(function($){
 
           var fpath = (typeof jQuery('#fileupload').attr('data-fpath') != 'undefined') ? jQuery('#fileupload').attr('data-fpath') : "";
           chatdata = {"nick":nick, "group": group, "msg": msg, "photo": fpath};
+
           socket.emit('newchat', chatdata, function(data){
             $('#fileupload').fadeIn();
           });
+
           if(typeof jQuery('#fileupload').attr('data-fpath') != 'undefined') {
            jQuery('#chats').append('<p> <img class="img-responsive img-rounded" src="'+ fpath +'" > <p>');
           }
