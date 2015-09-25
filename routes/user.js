@@ -63,6 +63,9 @@ exports.usernameCheck = function (req, res) {
 // Edit a User
 exports.editUser = function (req, res) {
   var wine = req.body;
+  //console.log(wine);
+  //res.send(wine);
+
   getConnection(function (err, db) {
     var uEmail = req.body.email,
         result = {};

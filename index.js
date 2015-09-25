@@ -2,6 +2,8 @@ var express = require('express'),
 app = express(),
 http = require('http'),
 server = http.createServer(app),
+morgan  = require('morgan'),
+fs = require('fs'),
 io = require('socket.io').listen(server),
 socketClients = {},
 oneYear = 31557600000;
@@ -17,11 +19,16 @@ var users = {};
 var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart();
 var bodyParser = require('body-parser')
-app.use( bodyParser.json({limit: '50mb'}) );
+
+app.use( bodyParser.json({limit: '5mb'}) );
 app.use(bodyParser.urlencoded({
   extended: true,
   limit: '50mb'
 }));
+
+//Configure logger; create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
+app.use(morgan('combined', {stream: accessLogStream}))
 
 //Serve Static Files
 app.use("/uploads", express.static(__dirname + '/uploads', { maxAge: oneYear }));
