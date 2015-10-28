@@ -1,0 +1,48 @@
+{
+  "room"  : "wer234234",
+  "time"  : 123123434,
+  "about" : "About what?",
+  "chats" : [
+    {
+      "from"    : "Nikhil Mohan",
+      "dir"     : "usertoadmin",
+      "type"    : "text",
+      "messgae" : "f sdf sdf sdjh ksjdhkl sdjlsdjf"
+    },
+    {
+      "from"    : "Amal Mohan",
+      "dir"     : "admintouser",
+      "type"    : "text",
+      "messgae" : "iueryiweur wiuyreoi utywoi uerhgkldjfgskdjh "
+    },
+    {
+      "from"    : "Amal Mohan",
+      "dir"     : "admintouser",
+      "type"    : "text",
+      "messgae" : "iueryiweur wiuyreoi utywoi uerhgkldjfgskdjh "
+    },
+    {
+      "from"    : "Amal Mohan",
+      "dir"     : "admintouser",
+      "type"    : "table",
+      "messgae" : "",
+      "tableData" : [
+        {"Sdfsdf", "sdfsdf", "sdfsdfsdf"},
+        {"w535", "345", "sdfsdfsd345f"},
+        {"wrwer", "rtet", "tryrty"},
+      ]
+    },
+    {
+      "from"    : "Amal Mohan",
+      "dir"     : "admintouser",
+      "type"    : "text",
+      "messgae" : "An app icon and splash screen (launch image) are important parts of any app, yet making them used to be incredibly tedious"
+    },
+    {
+      "from"    : "Nikhil Mohan",
+      "dir"     : "usertoadmin",
+      "type"    : "text",
+      "messgae" : "A sandwich is a quick and tasty way to make a meal. It can make a great lunch or breakfast, and can either be served either hot or cold. Below you'll find a general primer on how sandwiches work, as well as recipes and ideas for assembling your own."
+    }
+  ]
+}

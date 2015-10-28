@@ -1,0 +1,105 @@
+.login-area {
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+  display: block;
+  position: absolute;
+}
+.wrap {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-sarif;
+  background: #eee;
+  padding: 60px 20px 20px;
+  height: 100%;
+}
+
+form#adminLogin {
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  width: 300px;
+}
+
+input,
+button {
+  display: block;
+  width: 83%;
+  margin: 20px auto;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+}
+
+#adminLogin button {
+  width: 100%
+}
+button {
+  background-color: #505d71;
+  color: #fff;
+}
+#admChatForm button {
+  width: 13%;
+  float: right;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 59px;
+}
+button:hover {
+  background-color: rgba(1, 46, 139, 0.82);
+  cursor: pointer;
+}
+
+input {
+  background: #eee;
+  padding-left: 40px;
+}
+
+input[name="username"] {
+  background: #eee url("http://oi59.tinypic.com/e7mr0z.jpg") no-repeat;
+  background-position: 10px 50%;
+}
+
+input[name="password"] {
+  background: #eee url("http://oi60.tinypic.com/os92eo.jpg") no-repeat;
+  background-position: 10px 50%;
+}
+textarea {
+  width: 100%;
+  font-size: 14px;
+}
+.input-wrapper i:hover {
+  color: #333;
+}
+form *:focus {
+  outline: 0 none;
+}
+.logo {
+  text-align: center;
+  color: #72a3ff
+}
+.chat-area ul > li:last-child{
+  border-bottom: 1px solid #cfdae1
+}
+.hidden {
+  visibility: hidden;
+  display: none !important;
+}
+.realcust i {
+  position: absolute;
+  right: 5px;
+  animation: blinker 1s linear infinite;
+}
+
+@-webkit-keyframes blinker {
+  0% { opacity: 0.0}
+  50% { opacity: 0.5}
+  100% { opacity: 1.0}
+}
+.nobody {
+  position: absolute;
+  top: 50%;
+  font-size: 15px;
+  width: 100%;
+  text-align: center;
+  color: #cfd6e0;
+  font-style: italic;
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Chat Thxalot</title>
+  <!-- Bootstrap -->
+
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../assets/css/adminstyle.css" rel="stylesheet">
+  <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="js mchat mchatadminc">
+
+
+
+  <div class="container" id="chatui">
+    <audio id="newchat">
+      <source src="../assets/newchat.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+      </div>
+      <div class="col-md-8">
+      </div>
+    </div>
+
+    <div class="window-wrapper">
+    <div class="window-title">
+      <div class="dots">
+        <i class="fa fa-circle"></i>
+        <i class="fa fa-circle"></i>
+        <i class="fa fa-circle"></i>
+      </div>
+      <div class="title">
+        <span>Slick Support</span>
+      </div>
+      <div class="expand">
+        <i class="fa fa-expand" title="Toggle Width"></i> &nbsp;
+        <i class="fa fa-sign-out sign-out hidden" title="Sign Out"></i>
+      </div>
+
+    </div>
+
+    <div class="login-area">
+
+      <div class="wrap">
+
+        <form id="adminLogin" method="post" class="form">
+          <div class="logo">
+            <i class="fa fa-5x fa-comments-o"></i>
+          </div>
+          <input type="email" class="form-control" required="true" id="admEmail" placeholder="Email Address" value="nik@nik.com">
+          <input type="text" class="form-control" id="admName" placeholder="Your Name" value="Nikhil Mohan">
+          <input type="password" class="form-control" required="true" id="admPass" placeholder="Password" value="123">
+          <button type="submit" class="btn btn-default">Sign In</button>
+        </form>
+      </div>
+
+
+    </div>
+
+    <div class="window-area">
+      <div class="conversation-list">
+        <ul class="customers" id="newusers">
+          <li class="item"><a href="#"><i class="fa fa-list-alt"></i><span><b>CUSTOMERS</b></span></a></li>
+          <li class='text-muted realcust' data-chatsub='sdfsdf' data-room='sdfsdf'><a href='#'><span>history</span></a></li>
+        </ul>
+        <div class="my-account">
+          <div class="image">
+            <img id="admimg" src="">
+            <i class="fa fa-circle online"></i>
+          </div>
+          <div class="name">
+            <span id="admNamespan"></span>
+            <i class="fa fa-angle-down"></i>
+            <span class="availability">Available</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="chat-area">
+        <div class="title"><b id="conv-title">---</b><i class="fa fa-search"></i></div>
+        <div class="chat-list">
+          <ul></ul>
+        </div>
+        <h3 class="text-muted nobody"> Pick a customer from the left pane to get started !!</h3>
+        <div class="input-area hidden">
+          <form action="" id="admChatForm">
+            <div class="input-wrapper">
+              <textarea type="text" rows="3" value="" id="chatter_message"></textarea>
+              <i class="fa fa-smile-o"></i>
+              <i class="fa fa-paperclip"></i>
+            </div>
+            <button type="submit" id="sendchat" class="send-btn"> <i class="fa fa-2x fa-send"></i></button>
+          </form>
+        </div>
+      </div>
+      <div class="right-tabs">
+        <ul class="tabs">
+          <li class="active">
+            <a href="#"><i class="fa fa-users"></i></a>
+          </li>
+          <li><a href="#"><i class="fa fa-paperclip"></i></a></li>
+          <li><a href="#"><i class="fa fa-link"></i></a></li>
+        </ul>
+        <ul class="tabs-container">
+          <li class="active">
+            <ul class="member-list">
+              <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>
+              <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>
+              <li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>
+              <li><span class="status offline"><i class="fa fa-circle-o"></i></span><span>Daniel Freitz</span></li>
+            </ul>
+          </li>
+          <li></li>
+          <li></li>
+        </ul>
+        <i class="fa fa-cog"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="../assets/js/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/store.min.js"></script>
+  <script src="../assets/js/md5.min.js"></script>
+  <script src="../assets/js/mchatadmin.js"></script>
+
+</body>
+</html>
