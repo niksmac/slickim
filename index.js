@@ -80,7 +80,7 @@ app.post('/upload', multipartMiddleware, theHelper.uploadImages);
 //The Chat
 io.sockets.on('connection', function (socket) {
   var shortid = require('shortid');
-  var getConnection = require('./connection.js');
+  // var getConnection = require('./connection.js');
   socket.on('newuser', function (data, callback) {
     if (data in users) {
       callback(false);
