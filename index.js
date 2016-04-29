@@ -8,11 +8,8 @@ io = require('socket.io').listen(server),
 socketClients = {},
 oneYear = 31557600000;
 server.listen(3000);
-console.log('NodeJs server started on port 3000 - http://localhost:3000');
+console.log('NodeJs server started on - http://localhost:3000');
 
-var theUser = require('./routes/user');
-var thefriend = require('./routes/friends');
-var theGroup = require('./routes/groups');
 var theStatic = require('./routes/static');
 var theHelper = require('./routes/helper');
 var users = {};
@@ -32,7 +29,6 @@ var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a
 app.use(morgan('combined', {stream: accessLogStream}))
 
 //Serve Static Files
-app.use("/uploads", express.static(__dirname + '/uploads', { maxAge: oneYear }));
 app.use("/assets", express.static(__dirname + '/assets', { maxAge: oneYear }));
 
 // Show the home page
@@ -51,31 +47,7 @@ app.get('/mchat', function (req, res) {
 app.get('/mchatadmin', function (req, res) {
   res.sendFile(__dirname + '/views/mchatadmin.html');
 });
-//Static
-app.get('/privacy', theStatic.privacy);
-app.get('/terms', theStatic.terms);
 
-//Users
-app.post('/user', theUser.addUser);
-app.get('/username_check/:uname', theUser.usernameCheck);
-app.get('/user/search/:uname', theUser.userSearch);
-app.get('/user/me/:uname', theUser.userSearch);
-app.put('/user', theUser.editUser);
-app.post('/user/reset', theUser.resetPass);
-app.post('/user/auth', theUser.authUser);
-
-//Friendship
-app.post('/friends/invite', thefriend.inviteFriend);
-app.get('/friends/:nick', thefriend.getFriends);
-app.post('/friends/match', thefriend.matchContacts);
-
-//Chat Group
-app.post('/group', theGroup.createGroup);
-app.get('/mygroups/:nick', theGroup.getMygroups);
-
-//Upload Image
-app.post('/upload', multipartMiddleware, theHelper.uploadImages);
-//app.post('/base64upload', multipartMiddleware, theHelper.base64upload);
 
 //The Chat
 io.sockets.on('connection', function (socket) {
