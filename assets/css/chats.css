@@ -231,3 +231,7 @@ html, body{
 .chatter_feedback h4 {
   color: #FFF;
 }
+.red {
+  color: red;
+  background: rgb(239, 238, 34);
+}

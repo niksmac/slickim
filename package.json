@@ -26,6 +26,7 @@
     "nodemailer": "~1.4.0",
     "password-hash": "~1.2.2",
     "shortid": "~2.2.2",
-    "socket.io": "~1.3.6"
+    "socket.io": "~1.3.6",
+    "string": "^3.3.1"
   }
 }

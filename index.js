@@ -19,7 +19,7 @@ var multipartMiddleware = multipart();
 var bodyParser = require('body-parser')
 var passwordHash = require('password-hash');
 var getConnection = require('./connection.js');
-
+var S = require('string');
 
 app.use( bodyParser.json({limit: '5mb'}) );
 app.use(bodyParser.urlencoded({
@@ -179,7 +179,6 @@ io.sockets.on('connection', function (socket) {
       "apic": data.apic,
       "aname": data.aname,
       "chatter_name": 'Admins here'
-
     });
 
     var wine = data;
@@ -202,6 +201,17 @@ io.sockets.on('connection', function (socket) {
       "msg": data.msg,
       "chatter_name": data.chatter_name
     });
+
+    var thisMsg = data.msg;
+    if (S(thisMsg).startsWith("/help")) {
+      socket.in(data.room).emit('botReply', {
+        "msg": "This is cool",
+        "apic": "",
+        "aname": "The Helper Bot",
+        "chatter_name": 'The Helper Bot'
+      });
+    }
+
     var wine = data;
     getConnection(function (err, db) {
       db.collection('chats', function (err, collection) {

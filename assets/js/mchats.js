@@ -34,11 +34,11 @@ jQuery(function($){
   $('#chatter_create_user').submit(function(e) {
     e.preventDefault();
     var chatter_name = $('#chatter_name').val(),
-        chatter_email = $('#chatter_email').val(),
-        chat_sub = $('#chat_sub').val();
+    chatter_email = $('#chatter_email').val(),
+    chat_sub = $('#chat_sub').val();
 
     var hash = md5(chatter_email),
-        url = "https://secure.gravatar.com/avatar/" + hash + "?d=mm";
+    url = "https://secure.gravatar.com/avatar/" + hash + "?d=mm";
     $('#chatter_avatar').attr("src", url);
     if(chatter_name === '') {
       $('#chatter_name').addClass('required');
@@ -68,16 +68,15 @@ jQuery(function($){
   });
 
   $('#sendchat').click(function() {
-    console.log(store.get('croom'));
     var thisChat = $('#chatter_message').val();
     if( thisChat === '' ) {
       return false;
     }
     //Get chatter details
     var cname = store.get('cname'),
-        cemail = store.get('cemail'),
-        croom = store.get('croom'),
-        cpic = store.get("cpic");
+    cemail = store.get('cemail'),
+    croom = store.get('croom'),
+    cpic = store.get("cpic");
     socket.emit('usersChat', {"msg":thisChat, "room":croom, "chatter_name":cname});
     var thisChatHtml = "<span class='chatter_msg_item chatter_msg_item_user clearfix'>\
     <span class='chatter_avatar'><img src='"+cpic+"' /></span>\
@@ -94,7 +93,18 @@ jQuery(function($){
   });
 
   socket.on("adminsReply",function(data) {
-    console.log(data);
+    console.log('adminsReply');
+    renderNormalChat(data);
+    var thisChatHtml = "<span class='chatter_msg_item chatter_msg_item_admin clearfix'>\
+    <span class='chatter_avatar'><img src='"+data.apic+"' /></span>\
+    <strong class='chatter_name'>" + data.aname + "</strong>"+data.msg+"</span>";
+    $('.chatter_convo').append(thisChatHtml);
+    fitChat();
+  });
+
+
+  socket.on("botReply",function(data) {
+    console.log('botReply');
     renderNormalChat(data);
     var thisChatHtml = "<span class='chatter_msg_item chatter_msg_item_admin clearfix'>\
     <span class='chatter_avatar'><img src='"+data.apic+"' /></span>\
@@ -109,17 +119,27 @@ jQuery(function($){
     $('.chatter_post_signup').slideDown();
   });
 
-  $('#chatter_create_user').hide();
-  $('.chatter_post_signup').hide();
-  $('.chatter_feedback').show();
+  // $('#chatter_create_user').hide();
+  // $('.chatter_post_signup').hide();
+  // $('.chatter_feedback').show();
 
   $('#sendfeedback').click(function(e) {
     e.preventDefault();
     var chatter_name = $('#chatter_name').val(),
-        chatter_email = $('#chatter_email').val(),
-        chat_sub = $('#chat_sub').val(),
-        feedback = $('#feedbacktxt').val();
+    chatter_email = $('#chatter_email').val(),
+    chat_sub = $('#chat_sub').val(),
+    feedback = $('#feedbacktxt').val();
 
+    if(feedback == ""){
+      $('#feedbacktxt').val('Feedback cant be empty');
+      $('#feedbacktxt').addClass('red');
+      setTimeout(function() {
+        $('#feedbacktxt').removeClass('red');
+
+        $('#feedbacktxt').val('');
+      }, 1000);
+      return;
+    }
     var userdata = {
       "chatter_name": chatter_name,
       "chatter_email": chatter_email,
@@ -131,22 +151,21 @@ jQuery(function($){
     });
 
   });
-
-
-
-  //console.log(window.navigator.geolocation.getCurrentPosition);
-  // socket.on('connection', function(data){
-  //   var userdata = {"nick":nick, "group": group};
-  // socket.emit('newuser', userdata, function(data){
-  //   $('#newuser').hide();
-  //   $('#chatWrap').show();
-  // });
-  // });
-
-
 });
 
 
 function renderNormalChat(data) {
   return data;
 }
+
+$(function() {
+  var availableTutorials = [
+    "/help",
+    "/again",
+    "/purchases",
+    "/shipping",
+  ];
+  $( "#chatter_message" ).autocomplete({
+    source: availableTutorials
+  });
+});
