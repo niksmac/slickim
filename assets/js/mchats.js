@@ -68,6 +68,7 @@ jQuery(function($){
   });
 
   $('#sendchat').click(function() {
+    console.log(store.get('croom'));
     var thisChat = $('#chatter_message').val();
     if( thisChat === '' ) {
       return false;
@@ -101,6 +102,36 @@ jQuery(function($){
     $('.chatter_convo').append(thisChatHtml);
     fitChat();
   });
+
+  socket.on("adminEndedYes", function(data) {
+    console.log('adminEndedYes');
+    console.log(data);
+    $('.chatter_post_signup').slideDown();
+  });
+
+  $('#chatter_create_user').hide();
+  $('.chatter_post_signup').hide();
+  $('.chatter_feedback').show();
+
+  $('#sendfeedback').click(function(e) {
+    e.preventDefault();
+    var chatter_name = $('#chatter_name').val(),
+        chatter_email = $('#chatter_email').val(),
+        chat_sub = $('#chat_sub').val(),
+        feedback = $('#feedbacktxt').val();
+
+    var userdata = {
+      "chatter_name": chatter_name,
+      "chatter_email": chatter_email,
+      "chat_sub": chat_sub,
+      "feedback": feedback
+    };
+    socket.emit('userFeedback', userdata, function(data) {
+      console.log('success');
+    });
+
+  });
+
 
 
   //console.log(window.navigator.geolocation.getCurrentPosition);

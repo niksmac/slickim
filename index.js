@@ -17,6 +17,9 @@ var users = {};
 var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart();
 var bodyParser = require('body-parser')
+var passwordHash = require('password-hash');
+var getConnection = require('./connection.js');
+
 
 app.use( bodyParser.json({limit: '5mb'}) );
 app.use(bodyParser.urlencoded({
@@ -52,7 +55,8 @@ app.get('/mchatadmin', function (req, res) {
 //The Chat
 io.sockets.on('connection', function (socket) {
   var shortid = require('shortid');
-  var getConnection = require('./connection.js');
+
+
   socket.on('newuser', function (data, callback) {
     if (data in users) {
       callback(false);
@@ -93,6 +97,21 @@ io.sockets.on('connection', function (socket) {
 
       socket.user_id = data.nick;
       socketClients[socket.user_id] = socket;
+
+
+      var wine = data;
+      getConnection(function (err, db) {
+        db.collection('chats', function (err, collection) {
+          collection.insert(wine, {safe: true}, function (err, result) {
+            if (err) {
+              console.log('err');
+            } else {
+              console.log('chat saved');
+            }
+          });
+        });
+      });
+
     }
   });
 
@@ -128,6 +147,20 @@ io.sockets.on('connection', function (socket) {
       "room": groupId,
       "chat_sub": data.chat_sub
     });
+
+    var wine = data;
+    getConnection(function (err, db) {
+      db.collection('users', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, res) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('addded');
+          }
+        });
+      });
+    });
+
     callback(groupId);
   });
 
@@ -144,8 +177,24 @@ io.sockets.on('connection', function (socket) {
     socket.broadcast.to(data.room).emit('adminsReply', {
       "msg": data.msg,
       "apic": data.apic,
-      "aname": data.aname
+      "aname": data.aname,
+      "chatter_name": 'Admins here'
+
     });
+
+    var wine = data;
+    getConnection(function (err, db) {
+      db.collection('chats', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, result) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('chat saved');
+          }
+        });
+      });
+    });
+
   });
 
   socket.on('usersChat', function(data) {
@@ -153,6 +202,38 @@ io.sockets.on('connection', function (socket) {
       "msg": data.msg,
       "chatter_name": data.chatter_name
     });
+    var wine = data;
+    getConnection(function (err, db) {
+      db.collection('chats', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, result) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('chat saved');
+          }
+        });
+      });
+    });
+  });
+
+  socket.on('adminEnded', function(data) {
+    socket.broadcast.to(data.room).emit('adminEndedYes', {});
+  });
+
+  socket.on('userFeedback', function(data) {
+    var wine = data;
+    getConnection(function (err, db) {
+      db.collection('feedback', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, result) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('feedback saved');
+          }
+        });
+      });
+    });
+
   });
 
 });

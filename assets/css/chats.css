@@ -62,7 +62,7 @@ html, body{
   box-shadow: 7px -5px 11px rgba(0,0,0,0.3);
 }
 
-.chatter .chatter_pre_signup {
+.chatter .chatter_pre_signup, .chatter_feedback {
   display: none;
 }
 
@@ -227,4 +227,7 @@ html, body{
 }
 .mchatadminc .chatter {
   background: #c0a904 !important;
+}
+.chatter_feedback h4 {
+  color: #FFF;
 }
