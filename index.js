@@ -8,11 +8,8 @@ io = require('socket.io').listen(server),
 socketClients = {},
 oneYear = 31557600000;
 server.listen(3000);
-console.log('NodeJs server started on port 3000 - http://localhost:3000');
+console.log('NodeJs server started on - http://localhost:3000');
 
-var theUser = require('./routes/user');
-var thefriend = require('./routes/friends');
-var theGroup = require('./routes/groups');
 var theStatic = require('./routes/static');
 var theHelper = require('./routes/helper');
 var users = {};
@@ -20,6 +17,9 @@ var users = {};
 var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart();
 var bodyParser = require('body-parser')
+var passwordHash = require('password-hash');
+var getConnection = require('./connection.js');
+var S = require('string');
 
 app.use( bodyParser.json({limit: '5mb'}) );
 app.use(bodyParser.urlencoded({
@@ -32,7 +32,6 @@ var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a
 app.use(morgan('combined', {stream: accessLogStream}))
 
 //Serve Static Files
-app.use("/uploads", express.static(__dirname + '/uploads', { maxAge: oneYear }));
 app.use("/assets", express.static(__dirname + '/assets', { maxAge: oneYear }));
 app.use("/assets/js", express.static(__dirname + '/assets/js', { maxAge: oneYear }));
 app.use("/assets/css", express.static(__dirname + '/assets/css', { maxAge: oneYear }));
@@ -56,36 +55,11 @@ app.get('/mchat', function (req, res) {
 app.get('/mchatadmin', function (req, res) {
   res.sendFile(__dirname + '/views/mchatadmin.html');
 });
-//Static
-app.get('/privacy', theStatic.privacy);
-app.get('/terms', theStatic.terms);
 
-//Users
-app.post('/user', theUser.addUser);
-app.get('/username_check/:uname', theUser.usernameCheck);
-app.get('/user/search/:uname', theUser.userSearch);
-app.get('/user/me/:uname', theUser.userSearch);
-app.put('/user', theUser.editUser);
-app.post('/user/reset', theUser.resetPass);
-app.post('/user/auth', theUser.authUser);
-
-//Friendship
-app.post('/friends/invite', thefriend.inviteFriend);
-app.get('/friends/:nick', thefriend.getFriends);
-app.post('/friends/match', thefriend.matchContacts);
-
-//Chat Group
-app.post('/group', theGroup.createGroup);
-app.get('/mygroups/:nick', theGroup.getMygroups);
-
-//Upload Image
-app.post('/upload', multipartMiddleware, theHelper.uploadImages);
-//app.post('/base64upload', multipartMiddleware, theHelper.base64upload);
 
 //The Chat
 io.sockets.on('connection', function (socket) {
   var shortid = require('shortid');
-  // var getConnection = require('./connection.js');
   socket.on('newuser', function (data, callback) {
     if (data in users) {
       callback(false);
@@ -126,6 +100,21 @@ io.sockets.on('connection', function (socket) {
 
       socket.user_id = data.nick;
       socketClients[socket.user_id] = socket;
+
+
+      var wine = data;
+      getConnection(function (err, db) {
+        db.collection('chats', function (err, collection) {
+          collection.insert(wine, {safe: true}, function (err, result) {
+            if (err) {
+              console.log('err');
+            } else {
+              console.log('chat saved');
+            }
+          });
+        });
+      });
+
     }
   });
 
@@ -161,6 +150,20 @@ io.sockets.on('connection', function (socket) {
       "room": groupId,
       "chat_sub": data.chat_sub
     });
+
+    var wine = data;
+    getConnection(function (err, db) {
+      db.collection('users', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, res) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('addded');
+          }
+        });
+      });
+    });
+
     callback(groupId);
   });
 
@@ -177,8 +180,23 @@ io.sockets.on('connection', function (socket) {
     socket.broadcast.to(data.room).emit('adminsReply', {
       "msg": data.msg,
       "apic": data.apic,
-      "aname": data.aname
+      "aname": data.aname,
+      "chatter_name": 'Admins here'
     });
+
+    var wine = data;
+    getConnection(function (err, db) {
+      db.collection('chats', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, result) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('chat saved');
+          }
+        });
+      });
+    });
+
   });
 
   socket.on('usersChat', function(data) {
@@ -186,6 +204,49 @@ io.sockets.on('connection', function (socket) {
       "msg": data.msg,
       "chatter_name": data.chatter_name
     });
+
+    var thisMsg = data.msg;
+    if (S(thisMsg).startsWith("/help")) {
+      socket.in(data.room).emit('botReply', {
+        "msg": "This is cool",
+        "apic": "",
+        "aname": "The Helper Bot",
+        "chatter_name": 'The Helper Bot'
+      });
+    }
+
+    var wine = data;
+    getConnection(function (err, db) {
+      db.collection('chats', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, result) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('chat saved');
+          }
+        });
+      });
+    });
+  });
+
+  socket.on('adminEnded', function(data) {
+    socket.broadcast.to(data.room).emit('adminEndedYes', {});
+  });
+
+  socket.on('userFeedback', function(data) {
+    var wine = data;
+    getConnection(function (err, db) {
+      db.collection('feedback', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, result) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('feedback saved');
+          }
+        });
+      });
+    });
+
   });
 
 });

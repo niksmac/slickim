@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Chat Thxalot</title>
+  <title>Chat Slick IM</title>
   <!-- Bootstrap -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/css/chats.css" rel="stylesheet">
@@ -58,8 +58,18 @@
             Oh hello. Who is this?
           </span> -->
         </div>
+        <div class="ui-widget">
         <textarea id="chatter_message" placeholder="Type your message here..." class="chatter_field chatter_message"></textarea>
+      </div>
+
         <button type="butoon" id="sendchat" class="chatter_btn chatter_create_user">Send</button>
+      </div>
+
+      <div class="chatter_feedback">
+        <h4>Leave feedback</h4>
+        <textarea name="feedbacks" id="feedbacktxt" placeholder="Leave feedback" rows="8" cols="36"></textarea>
+        <button type="submit" id="sendfeedback" class="chatter_btn chatter_create_user" >Send Feedback</button>
+
       </div>
 
     </div>
@@ -73,7 +83,11 @@
     <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/store.min.js"></script>
     <script src="../assets/js/md5.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
     <script src="../assets/js/mchats.js"></script>
+
+    <!-- http://www.tutorialspoint.com/jqueryui/jqueryui_autocomplete.htm -->
 
   </body>
   </html>

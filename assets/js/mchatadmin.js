@@ -140,6 +140,14 @@ jQuery(function($){
     $('.sign-out').addClass('hidden');
   });
 
+  $('#endchat').on('click', function(e) {
+    e.preventDefault();
+    var room = store.get('aroom');
+    console.log(room);
+    socket.emit('adminEnded', {"room":room});
+
+  });
+
   function getTimenow() {
     var d = new Date();
     return d.toTimeString().split(" ")[0];

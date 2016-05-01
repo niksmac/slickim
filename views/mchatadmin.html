@@ -5,12 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Chat Thxalot</title>
+  <title>Chat Admin Slick IM</title>
   <!-- Bootstrap -->
 
   <link href="../assets/css/style.css" rel="stylesheet">
   <link href="../assets/css/adminstyle.css" rel="stylesheet">
   <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+  <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,8 +21,6 @@
   <![endif]-->
 </head>
 <body class="js mchat mchatadminc">
-
-
 
   <div class="container" id="chatui">
     <audio id="newchat">
@@ -91,7 +90,7 @@
         </div>
       </div>
       <div class="chat-area">
-        <div class="title"><b id="conv-title">---</b><i class="fa fa-search"></i></div>
+        <div class="title"><b id="conv-title">---</b><i id="endchat" class="fa fa-search"> / end chat</i></div>
         <div class="chat-list">
           <ul></ul>
         </div>
