@@ -34,6 +34,11 @@ app.use(morgan('combined', {stream: accessLogStream}))
 //Serve Static Files
 app.use("/uploads", express.static(__dirname + '/uploads', { maxAge: oneYear }));
 app.use("/assets", express.static(__dirname + '/assets', { maxAge: oneYear }));
+app.use("/assets/js", express.static(__dirname + '/assets/js', { maxAge: oneYear }));
+app.use("/assets/css", express.static(__dirname + '/assets/css', { maxAge: oneYear }));
+
+// app.use(express.static(__dirname + '/assets'));
+
 
 // Show the home page
 app.get('/', function (req, res) {
