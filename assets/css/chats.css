@@ -235,3 +235,33 @@ html, body{
   color: red;
   background: rgb(239, 238, 34);
 }
+
+
+ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+ul.sales li {
+  clear: both;
+  display: block;
+}
+ul.sales li span {
+  display: inline-block;
+  float: left;
+}
+ul.sales li span:nth-child(1) {
+  width: 8%;
+}
+ul.sales li span:nth-child(2) {
+  width: 70%;
+}
+ul.sales li span:nth-child(3) {
+  width: 10%;
+}
+
+.botsReply {
+  width: 80%;
+  max-width: 100% !important;
+  background: rgba(255, 167, 6, 0.86) !important;
+}

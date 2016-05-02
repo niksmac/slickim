@@ -197,18 +197,31 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('usersChat', function(data) {
+    var botName = "Helper Bot";
     socket.broadcast.to(data.room).emit('usersReply', {
       "msg": data.msg,
       "chatter_name": data.chatter_name
     });
-
+    // console.log(socket.id);
     var thisMsg = data.msg;
+    var botsReply = '';
     if (S(thisMsg).startsWith("/help")) {
-      socket.in(data.room).emit('botReply', {
-        "msg": "This is cool",
-        "apic": "",
-        "aname": "The Helper Bot",
-        "chatter_name": 'The Helper Bot'
+      botsReply = "This is a helper bot, you can see the list of commands here <ul><li>/help,</li> <li>/whoami,</li> <li>/purchases,</li> <li>/orderstatus,</li></ul>";
+    } else if (S(thisMsg).startsWith("/whoami")) {
+      botsReply = "Well, you are <b>" + data.chatter_name + "</b>";
+    } else if (S(thisMsg).startsWith("/purchases")) {
+      botsReply = '<ul class="sales">  <li>    <span>1</span>    <span>Birthday Cake</span>    <span>$95</span>  </li>  <li>    <span>2</span>    <span>Party Cups</span>    <span>$9.95</span>  </li>  <li>    <span>3</span>    <span>Pound of beef</span>    <span>$49.95</span>  </li>  <li>    <span>4</span>    <span>Bullet-proof vest</span>    <span>$495</span>  </li>  </ul>';
+    } else if (S(thisMsg).startsWith("/orderstatus")) {
+      var delay = Math.floor(Math.random() * 6) + 1;
+      var orderno = Math.floor(Math.random() * 61224) + 60000;
+      botsReply = 'Your order #'+orderno+' will be delivered in <b>' + delay + '</b> days!!';
+    }
+
+    if (botsReply != '') {
+      socket.emit('botsReply', {
+        "msg": botsReply,
+        "apic": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y",
+        "aname": botName
       });
     }
 

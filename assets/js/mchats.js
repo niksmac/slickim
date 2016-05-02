@@ -93,7 +93,6 @@ jQuery(function($){
   });
 
   socket.on("adminsReply",function(data) {
-    console.log('adminsReply');
     renderNormalChat(data);
     var thisChatHtml = "<span class='chatter_msg_item chatter_msg_item_admin clearfix'>\
     <span class='chatter_avatar'><img src='"+data.apic+"' /></span>\
@@ -102,11 +101,9 @@ jQuery(function($){
     fitChat();
   });
 
-
-  socket.on("botReply",function(data) {
-    console.log('botReply');
+  socket.on("botsReply",function(data) {
     renderNormalChat(data);
-    var thisChatHtml = "<span class='chatter_msg_item chatter_msg_item_admin clearfix'>\
+    var thisChatHtml = "<span class='chatter_msg_item botsReply chatter_msg_item_admin clearfix'>\
     <span class='chatter_avatar'><img src='"+data.apic+"' /></span>\
     <strong class='chatter_name'>" + data.aname + "</strong>"+data.msg+"</span>";
     $('.chatter_convo').append(thisChatHtml);
@@ -114,9 +111,10 @@ jQuery(function($){
   });
 
   socket.on("adminEndedYes", function(data) {
-    console.log('adminEndedYes');
-    console.log(data);
-    $('.chatter_post_signup').slideDown();
+    // $('.chatter_post_signup').slideDown();
+    $('#chatter_create_user').hide();
+    $('.chatter_post_signup').hide();
+    $('.chatter_feedback').show();
   });
 
   // $('#chatter_create_user').hide();
@@ -135,7 +133,6 @@ jQuery(function($){
       $('#feedbacktxt').addClass('red');
       setTimeout(function() {
         $('#feedbacktxt').removeClass('red');
-
         $('#feedbacktxt').val('');
       }, 1000);
       return;
@@ -149,7 +146,9 @@ jQuery(function($){
     socket.emit('userFeedback', userdata, function(data) {
       console.log('success');
     });
-
+    store.clear();
+    $('.chatter_feedback').hide();
+    $('.chatter_pre_signup').css('display', "block");
   });
 });
 
@@ -161,9 +160,9 @@ function renderNormalChat(data) {
 $(function() {
   var availableTutorials = [
     "/help",
-    "/again",
+    "/whoami",
     "/purchases",
-    "/shipping",
+    "/orderstatus",
   ];
   $( "#chatter_message" ).autocomplete({
     source: availableTutorials
