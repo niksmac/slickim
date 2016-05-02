@@ -4,7 +4,7 @@ var getConnection = function getConnection(callback) {
   if (db_singleton) {
     callback(null, db_singleton);
   } else {
-    var connURL = "mongodb://109.109.241.2:27017/slickim";
+    var connURL = "mongodb://localhost:27017/slickim";
     MongoClient.connect(connURL, function (err, db) {
       if (err) {
         console.log("Error creating new connection " + err);

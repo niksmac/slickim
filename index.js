@@ -33,6 +33,11 @@ app.use(morgan('combined', {stream: accessLogStream}))
 
 //Serve Static Files
 app.use("/assets", express.static(__dirname + '/assets', { maxAge: oneYear }));
+app.use("/assets/js", express.static(__dirname + '/assets/js', { maxAge: oneYear }));
+app.use("/assets/css", express.static(__dirname + '/assets/css', { maxAge: oneYear }));
+
+// app.use(express.static(__dirname + '/assets'));
+
 
 // Show the home page
 app.get('/', function (req, res) {
@@ -55,8 +60,6 @@ app.get('/mchatadmin', function (req, res) {
 //The Chat
 io.sockets.on('connection', function (socket) {
   var shortid = require('shortid');
-
-
   socket.on('newuser', function (data, callback) {
     if (data in users) {
       callback(false);
