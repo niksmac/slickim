@@ -4,6 +4,7 @@ var getConnection = function getConnection(callback) {
   if (db_singleton) {
     callback(null, db_singleton);
   } else {
+    // 109.109.241.2
     var connURL = "mongodb://localhost:27017/slickim";
     MongoClient.connect(connURL, function (err, db) {
       if (err) {
