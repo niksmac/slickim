@@ -44,9 +44,41 @@ jQuery(function($){
     $('.login-area').css('display', "none");
     $('.window-area').css('display', "block");
     $('.sign-out').removeClass('hidden');
+    $('#addprod').removeClass('hidden');
 
     populateHistrory("room");
 
+  });
+
+  $('#newProduct').submit(function(e) {
+    e.preventDefault();
+    var postdata = {
+      'name': $('#name').val(),
+      'price':  $('#price').val(),
+      'category': $('#category').val(),
+      'imgs': $('.thumbnail.this img').attr('src')
+    }
+    socket.emit('newProduct', postdata, function(data) {
+      $('#myModal').modal('hide');
+      $("#newProduct")[0].reset();
+      $('#successModal').modal('show');
+    });
+
+  });
+
+  $('#thelistlink').click(function() {
+    jQuery.getJSON( "products", function( data ) {
+    var items = [];
+    jQuery.each( data, function( key, val ) {
+      console.log(val);
+      items.push( '<li class="list-group-item"><div class="tumbnail"><a href="#"><img src="'+val.imgs+'" ></a><div class="caption"><h6><a href="#">'+val.name+'</a></h6><span class="price"></span><span class="price sale">$'+val.price+'</span></div></div></li>' );
+    });
+
+    jQuery( "<ul/>", {
+      "class": "list-group",
+      html: items.join( "" )
+    }).appendTo( "#thelist" );
+  });
   });
 
   $('#chatter_create_user').click(function(e) {
@@ -131,6 +163,10 @@ jQuery(function($){
 
   $('.fa-expand').click(function() {
     $('.window-wrapper').toggleClass('big');
+  });
+  $('.thumbnail').click(function() {
+    $('.thumbnail').removeClass('this');
+    $(this).addClass('this');
   });
 
   $('.sign-out').click(function() {

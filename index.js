@@ -57,6 +57,16 @@ app.get('/mchatadmin', function (req, res) {
 });
 
 
+app.get('/products', function (req, res) {
+  getConnection(function (err, db) {
+    db.collection('products', function (err, collection) {
+      collection.find().sort({$natural : -1}).toArray(function(err, items) {
+        res.send(items);
+      });
+    });
+  });
+});
+
 //The Chat
 io.sockets.on('connection', function (socket) {
   var shortid = require('shortid');
@@ -166,6 +176,45 @@ io.sockets.on('connection', function (socket) {
 
     callback(groupId);
   });
+
+  socket.on('newSale', function(data, callback) {
+    var orderId = shortid.generate();
+
+    var wine = data;
+    wine.orderId = orderId;
+    getConnection(function (err, db) {
+      db.collection('orders', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, res) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('order created #' + orderId);
+          }
+        });
+      });
+    });
+    callback();
+  });
+
+
+  socket.on('newProduct', function(data, callback) {
+    var productId = shortid.generate();
+    var wine = data;
+    wine.productId = productId;
+    getConnection(function (err, db) {
+      db.collection('products', function (err, collection) {
+        collection.insert(wine, {safe: true}, function (err, res) {
+          if (err) {
+            console.log('err');
+          } else {
+            console.log('product created #' + productId);
+          }
+        });
+      });
+    });
+    callback();
+  });
+
 
   socket.on('mnewadmin', function(data) {
     socket.join("admins");

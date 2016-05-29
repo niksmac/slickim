@@ -7,6 +7,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>Chat Admin Slick IM</title>
   <!-- Bootstrap -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 
   <link href="../assets/css/style.css" rel="stylesheet">
   <link href="../assets/css/adminstyle.css" rel="stylesheet">
@@ -35,110 +36,251 @@
     </div>
 
     <div class="window-wrapper">
-    <div class="window-title">
-      <div class="dots">
-        <i class="fa fa-circle"></i>
-        <i class="fa fa-circle"></i>
-        <i class="fa fa-circle"></i>
-      </div>
-      <div class="title">
-        <span>Slick Support</span>
-      </div>
-      <div class="expand">
-        <i class="fa fa-expand" title="Toggle Width"></i> &nbsp;
-        <i class="fa fa-sign-out sign-out hidden" title="Sign Out"></i>
-      </div>
-
-    </div>
-
-    <div class="login-area">
-
-      <div class="wrap">
-
-        <form id="adminLogin" method="post" class="form">
-          <div class="logo">
-            <i class="fa fa-5x fa-comments-o"></i>
-          </div>
-          <input type="email" class="form-control" required="true" id="admEmail" placeholder="Email Address" value="sofia@googlemail.com">
-          <input type="text" class="form-control" id="admName" placeholder="Your Name" value="Sobhia S">
-          <input type="password" class="form-control" required="true" id="admPass" placeholder="Password" value="123">
-          <button type="submit" class="btn btn-default">Sign In</button>
-        </form>
-      </div>
-
-
-    </div>
-
-    <div class="window-area">
-      <div class="conversation-list">
-        <ul class="customers" id="newusers">
-          <li class="item"><a href="#"><i class="fa fa-list-alt"></i><span><b>CUSTOMERS</b></span></a></li>
-          <li class='text-muted realcust' data-chatsub='sdfsdf' data-room='sdfsdf'><a href='#'><span>history</span></a></li>
-        </ul>
-        <div class="my-account">
-          <div class="image">
-            <img id="admimg" src="">
-            <i class="fa fa-circle online"></i>
-          </div>
-          <div class="name">
-            <span id="admNamespan"></span>
-            <i class="fa fa-angle-down"></i>
-            <span class="availability">Available</span>
-          </div>
-
+      <div class="window-title">
+        <div class="dots">
+          <i class="fa fa-circle"></i>
+          <i class="fa fa-circle"></i>
+          <i class="fa fa-circle"></i>
         </div>
-      </div>
-      <div class="chat-area">
-        <div class="title"><b id="conv-title">---</b><i id="endchat" class="fa fa-search"> / end chat</i></div>
-        <div class="chat-list">
-          <ul></ul>
+        <div class="title">
+          <span>Slick Support</span>
         </div>
-        <h3 class="text-muted nobody"> Pick a customer from the left pane to get started !!</h3>
-        <div class="input-area hidden">
-          <form action="" id="admChatForm">
-            <div class="input-wrapper">
-              <textarea type="text" rows="3" value="" id="chatter_message"></textarea>
-              <i class="fa fa-smile-o"></i>
-              <i class="fa fa-paperclip"></i>
+        <div class="expand">
+
+          <i class="fa fa-expand" title="Toggle Width"></i> &nbsp;
+          <i class="fa fa-sign-out sign-out hidden" title="Sign Out"></i>
+        </div>
+
+      </div>
+
+      <div class="login-area">
+
+        <div class="wrap">
+
+          <form id="adminLogin" method="post" class="form">
+            <div class="logo">
+              <i class="fa fa-5x fa-comments-o"></i>
             </div>
-            <button type="submit" id="sendchat" class="send-btn"> <i class="fa fa-2x fa-send"></i></button>
+            <input type="email" class="form-control" required="true" id="admEmail" placeholder="Email Address" value="sofia@googlemail.com">
+            <input type="text" class="form-control" id="admName" placeholder="Your Name" value="Sobhia S">
+            <input type="password" class="form-control" required="true" id="admPass" placeholder="Password" value="123">
+            <button type="submit" class="btn btn-default">Sign In</button>
           </form>
         </div>
+
+
       </div>
-      <div class="right-tabs">
-        <ul class="tabs">
-          <li class="active">
-            <a href="#"><i class="fa fa-users"></i></a>
-          </li>
-          <li><a href="#"><i class="fa fa-paperclip"></i></a></li>
-          <li><a href="#"><i class="fa fa-link"></i></a></li>
-        </ul>
-        <ul class="tabs-container">
-          <li class="active">
-            <ul class="member-list">
-              <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>
-              <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>
-              <li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>
-              <li><span class="status offline"><i class="fa fa-circle-o"></i></span><span>Daniel Freitz</span></li>
-            </ul>
-          </li>
-          <li></li>
-          <li></li>
-        </ul>
-        <i class="fa fa-cog"></i>
+
+      <div class="window-area">
+        <div class="conversation-list">
+          <ul class="customers" id="newusers">
+            <li class="item"><a href="#"><i class="fa fa-list-alt"></i><span><b>CUSTOMERS</b></span></a></li>
+            <li class='text-muted realcust' data-chatsub='sdfsdf' data-room='sdfsdf'><a href='#'><span>history</span></a></li>
+          </ul>
+          <div class="my-account">
+            <div class="image">
+              <img id="admimg" src="">
+              <i class="fa fa-circle online"></i>
+            </div>
+            <div class="name">
+              <span id="admNamespan"></span>
+              <i class="fa fa-angle-down"></i>
+              <span class="availability">Available</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="chat-area">
+          <div class="title"><b id="conv-title">---</b><i id="endchat" class="fa fa-search"> / end chat</i></div>
+          <div class="chat-list">
+            <ul></ul>
+          </div>
+          <h3 class="text-muted nobody"> Pick a customer from the left pane to get started !!</h3>
+          <div class="input-area hidden">
+            <form action="" id="admChatForm">
+              <div class="input-wrapper">
+                <textarea type="text" rows="3" value="" id="chatter_message"></textarea>
+                <i class="fa fa-smile-o"></i>
+                <i class="fa fa-paperclip"></i>
+              </div>
+              <button type="submit" id="sendchat" class="send-btn"> <i class="fa fa-2x fa-send"></i></button>
+            </form>
+          </div>
+        </div>
+        <div class="right-tabs">
+          <ul class="tabs">
+            <li class="active">
+              <a href="#"><i class="fa fa-users"></i></a>
+            </li>
+            <li><a href="#"><i class="fa fa-paperclip"></i></a></li>
+            <li><a href="#"><i class="fa fa-link"></i></a></li>
+          </ul>
+          <ul class="tabs-container">
+            <li class="active">
+              <ul class="member-list">
+                <li><a href="#" id="addprod" data-toggle="modal" class="hidden" data-target="#myModal">Add New Product</a>
+                </li>
+                <li><a href="#" id="thelistlink" data-toggle="modal" data-target="#editmodal">Products List</a>
+                </li>
+              </ul>
+            </li>
+            <li></li>
+            <li></li>
+          </ul>
+          <i class="fa fa-cog"></i>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="../assets/js/jquery.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="../assets/js/bootstrap.min.js"></script>
-  <script src="../assets/js/store.min.js"></script>
-  <script src="../assets/js/md5.min.js"></script>
-  <script src="../assets/js/mchatadmin.js"></script>
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
 
-</body>
-</html>
+        <!-- Modal content-->
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add new product</h4>
+          </div>
+
+          <div class="modal-body">
+
+
+
+            <form role="form" id="newProduct" class="ng-pristine ng-valid">
+              <div class="form-content">
+
+
+                <div class="form-group">
+                  <input type="text" id="name" required class="form-control input-underline input-lg" placeholder="Name">
+                </div>
+
+
+                <div class="form-group">
+                  <input type="number" id="price" class="form-control input-underline input-lg" required placeholder="Price">
+                </div>
+
+                <div class="form-group">
+                  <select class="form-control input-underline input-lg" id="category">
+                    <option>t-shirts</option>
+                    <option>jacket</option>
+                    <option>full sleeve</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <h2>Choose Image</h2>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-1.jpg" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-2.jpg" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-3.jpg" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-4.jpg" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-5.jpg" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-6.jpg" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-7.jpg" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-8.jpg" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                      <img src="assets/img/shop-9.jpg" alt="...">
+                    </a>
+                  </div>
+                </div>
+
+
+
+              </div>
+              <button type="submit" class="btn btn-success btn-lg">
+                Add Product
+              </button> &nbsp;
+              <button data-dismiss="modal" class="btn btn-danger btn-lg">Cancel</button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="modal fade modal-success bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="successModal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Success</h4>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-success" role="alert">
+              <b>Success;</b> your new product has been added to the system.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade modal-success bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="editmodal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Success</h4>
+          </div>
+          <div class="modal-body">
+            <div id="thelist">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/store.min.js"></script>
+    <script src="../assets/js/md5.min.js"></script>
+    <script src="../assets/js/mchatadmin.js"></script>
+
+  </body>
+  </html>

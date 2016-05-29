@@ -19,6 +19,40 @@ jQuery(function($){
     $('#chatter_message').focus();
   }
 
+
+  jQuery.getJSON( "products", function( data ) {
+    var items = [];
+    jQuery.each( data, function( key, val ) {
+      console.log(val);
+      items.push( '<div class="col-xs-6 col-md-4 sitems" data-toggle="modal" data-target="#myModal"><div class="product tumbnail thumbnail-3"><a href="#"><img src="'+val.imgs+'" alt=""></a><div class="caption"><h6><a href="#">'+val.name+'</a></h6><span class="price"></span><span class="price sale">$'+val.price+'</span></div></div></div>' );
+
+      // <div class="col-xs-6 col-md-4 sitems" data-toggle="modal" data-target="#myModal">
+      //   <div class="product tumbnail thumbnail-3"><a href="#"><img src="assets/img/shop-1.jpg" alt=""></a>
+      //     <div class="caption">
+      //       <h6><a href="#">Short Sleeve T-Shirt</a></h6><span class="price">
+      //         </span><span class="price sale">$12.49</span>
+      //       </div>
+      //     </div>
+      //   </div>
+
+
+    });
+
+    jQuery( "<ul/>", {
+      "class": "my-new-list",
+      html: items.join( "" )
+    }).appendTo( "#catalog" );
+    initpopup();
+  });
+
+  function initpopup() {
+    $('.sitems').click(function() {
+      var thisElm = $(this);
+      $('.bname').html(thisElm.find('h6 a').html());
+      $('.bprice').html(thisElm.find('.sale').html());
+    });
+  }
+
   $('.chatter_pre_signup').css('display', "block");
   $('.chatter_post_signup').css('display', "none");
 
@@ -85,6 +119,30 @@ jQuery(function($){
     $('.chatter_convo').append(thisChatHtml);
     $('#chatter_message').val('');
     fitChat();
+  });
+
+
+
+  $('#buynow').submit(function(e) {
+    e.preventDefault();
+    var postdata = {
+      'name': $('#name').val(),
+      'email':  $('#email').val(),
+      'address': $('#address').val(),
+      'phone': $('#phone').val(),
+      'pin': $('#pin').val(),
+      'sitem': {
+        'name': $('.well .bname').text(),
+        'price': $('.well .bprice').text()
+      }
+    }
+
+    socket.emit('newSale', postdata, function(data) {
+      $('#myModal').modal('hide');
+      $("#buynow")[0].reset();
+      $('#successModal').modal('show');
+    });
+
   });
 
   socket.on("adminJonedYes", function(data) {

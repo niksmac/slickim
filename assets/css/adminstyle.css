@@ -19,8 +19,8 @@ form#adminLogin {
   width: 300px;
 }
 
-input,
-button {
+#chatui input,
+#chatui button {
   display: block;
   width: 83%;
   margin: 20px auto;
@@ -32,7 +32,7 @@ button {
 #adminLogin button {
   width: 100%
 }
-button {
+#chatui button {
   background-color: #505d71;
   color: #fff;
 }
@@ -43,33 +43,33 @@ button {
   margin-bottom: 0;
   height: 59px;
 }
-button:hover {
+#chatui button:hover {
   background-color: rgba(1, 46, 139, 0.82);
   cursor: pointer;
 }
 
-input {
+#chatui input {
   background: #eee;
   padding-left: 40px;
 }
 
-input[name="username"] {
+#chatui input[name="username"] {
   background: #eee url("http://oi59.tinypic.com/e7mr0z.jpg") no-repeat;
   background-position: 10px 50%;
 }
 
-input[name="password"] {
+#chatui input[name="password"] {
   background: #eee url("http://oi60.tinypic.com/os92eo.jpg") no-repeat;
   background-position: 10px 50%;
 }
-textarea {
+#chatui textarea {
   width: 100%;
   font-size: 14px;
 }
-.input-wrapper i:hover {
+#chatui .input-wrapper i:hover {
   color: #333;
 }
-form *:focus {
+#chatui form *:focus {
   outline: 0 none;
 }
 .logo {
@@ -88,7 +88,11 @@ form *:focus {
   right: 5px;
   animation: blinker 1s linear infinite;
 }
-
+.thumbnail.this,
+a.thumbnail:hover
+ {
+  border: 3px solid orange;
+}
 @-webkit-keyframes blinker {
   0% { opacity: 0.0}
   50% { opacity: 0.5}
