@@ -24,6 +24,8 @@ jQuery(function($){
         }
 
 
+        
+
 
         jQuery('#message').keyup(function(e){
           var nick = jQuery('#me').attr('data-nick');
