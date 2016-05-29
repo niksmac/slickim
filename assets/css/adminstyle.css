@@ -107,3 +107,6 @@ a.thumbnail:hover
   color: #cfd6e0;
   font-style: italic;
 }
+.msgred {
+  color: red !important;
+}

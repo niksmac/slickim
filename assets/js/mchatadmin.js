@@ -28,7 +28,15 @@ jQuery(function($){
 
   $('#adminLogin').submit(function(e) {
     e.preventDefault();
-    var chatter_name = $('#admName').val(),
+
+    var chatter_name = $('#admName').val();
+    var admPass = $('#admPass').val();
+
+    if(admPass !== 'sobhia') {
+      $('.msgred').html('Wrong password');
+      return;
+    }
+
     chatter_email = ($('#admEmail').val()) ? $('#admEmail').val() : "me@example.com";
     store.set('chatter', {"chatter_name":chatter_name, "chatter_email": chatter_email });
     $('#admNamespan').text(chatter_name);

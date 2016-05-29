@@ -452,3 +452,6 @@ ul.sales li span:nth-child(3) {
 .padding-top {
   padding-top: 40px;
 }
+.msgred {
+  color: red !important;
+}
